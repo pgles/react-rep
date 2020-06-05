@@ -22,7 +22,7 @@ function RenderMenuItem({dish,onClick})
                 <div key={dish.id} className='col-12 col-md-5 m-1' >
                     <RenderMenuItem dish={dish} />
                 </div>
-            );
+            );  
         });
         return ( 
             <div className="container">
