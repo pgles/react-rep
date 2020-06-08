@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
     dishes:state.dishes,
     comments:state.comments,
     promotions:state.promotions,
-    leaders:state.promotions
+    leaders:state.leaders
   };
 };
 class Main extends Component{
