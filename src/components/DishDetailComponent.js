@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Card,CardImg,CardTitle,CardBody,CardText,Breadcrumb,BreadcrumbItem,Button,Modal,ModalBody,ModalHeader,Label,Row,Col} from 'reactstrap';
 import { LocalForm, Control,Errors } from 'react-redux-form';
+import {Loading} from './LoadingComponent.js';
 
 const required = (value) => value && value.length;
 const minLength = (len) => (value) => value && (value.length >= len)  
@@ -90,18 +91,25 @@ class CommentForm extends Component {
     }
 const RenderComments = ({comments,addComment,dishId})=>{
     const commentArray=comments.map((comment)=>{
-        return(
-            <div key={comment.id} className='mb-1 mt-1'>
-                <li>
-                    <p>
-                        {comment.comment}
-                    </p>
-                    <p>
-                        -- {comment.author} , {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))};
-                    </p>
-                </li>
-            </div>
-        );
+        if(comment != null){
+            return(
+                <div key={comment.id} className='mb-1 mt-1'>
+                    <li>
+                        <p>
+                            {comment.comment}
+                        </p>
+                        <p>
+                            -- {comment.author} , {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))};
+                        </p>
+                    </li>
+                </div>
+            );
+        }
+        else{
+            return (<div>
+
+            </div>);
+        }
     }
     );
     return(
@@ -113,20 +121,44 @@ const RenderComments = ({comments,addComment,dishId})=>{
 }
 function RenderDish({dish})
 {
-    return(
-        <Card>
-            <CardImg width='100%' src={dish.image} alt={dish.name} />
-            <CardBody>
-                <CardTitle>{dish.name}</CardTitle>
-                <CardText>{ dish.description}</CardText>
-            </CardBody>
-        </Card>
-    );
+    if(dish != null) {
+        return(
+            <Card>
+                <CardImg width='100%' src={dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{ dish.description}</CardText>
+                </CardBody>
+            </Card>
+        );
+    }
+    else {
+        return (<div>
+
+        </div>);
+    }
 }
 
 function Dish(props){
-        console.log(props);
-        if(props.dish!=null){
+        if (props.isLoading) {
+            return (
+                <div className='container'>
+                    <div className='row'>
+                        <Loading />
+                    </div>
+                </div>
+            )
+        }
+        else if (props.errMess) {
+            return (
+                <div className='container'>
+                    <div className='row'>
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            )
+        }
+        else if(props.dish!=null){
             return(
                 <div className='container'>
                     <div className='row'>
