@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {Card,CardImg,CardTitle,CardBody,CardText,Breadcrumb,BreadcrumbItem,Button,Modal,ModalBody,ModalHeader,Label,Row,Col} from 'reactstrap';
 import { LocalForm, Control,Errors } from 'react-redux-form';
 import {Loading} from './LoadingComponent.js';
+import {baseUrl} from '../shared/baseUrl.js';
 
 const required = (value) => value && value.length;
 const minLength = (len) => (value) => value && (value.length >= len)  
@@ -124,7 +125,7 @@ function RenderDish({dish})
     if(dish != null) {
         return(
             <Card>
-                <CardImg width='100%' src={dish.image} alt={dish.name} />
+                <CardImg width='100%' src={baseUrl+dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle>{dish.name}</CardTitle>
                     <CardText>{ dish.description}</CardText>
