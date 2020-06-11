@@ -22,7 +22,7 @@ class CommentForm extends Component {
     }
     handleSubmit = (values) => {
         this.toggleModal();
-        this.props.addComment(this.props.dishId,values.rating,values.author,values.comment)
+        this.props.postComment(this.props.dishId,values.rating,values.author,values.comment)
     }
         render(){
             return(
@@ -90,7 +90,7 @@ class CommentForm extends Component {
             );
         }
     }
-const RenderComments = ({comments,addComment,dishId})=>{
+const RenderComments = ({comments,postComment,dishId})=>{
     const commentArray=comments.map((comment)=>{
         if(comment != null){
             return(
@@ -100,7 +100,7 @@ const RenderComments = ({comments,addComment,dishId})=>{
                             {comment.comment}
                         </p>
                         <p>
-                            -- {comment.author} , {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))};
+                            -- {comment.author} , {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))}
                         </p>
                     </li>
                 </div>
@@ -116,7 +116,7 @@ const RenderComments = ({comments,addComment,dishId})=>{
     return(
         <div className='list-unstyled'>
             {commentArray}
-            <CommentForm dishId={dishId} addComment={addComment}/>
+            <CommentForm dishId={dishId} postComment={postComment}/>
         </div>
     );
 }
@@ -179,7 +179,7 @@ function Dish(props){
                         
                             <div className="col-12 col-md-5 m-1">
                                 <h4>Comments</h4>
-                                <RenderComments comments={props.comments} addComment={props.addComment}
+                                <RenderComments comments={props.comments} postComment={props.postComment}
                                 dishId={props.dish.id}
                                 />
                             </div>
