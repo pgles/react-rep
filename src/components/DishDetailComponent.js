@@ -4,6 +4,7 @@ import {Card,CardImg,CardTitle,CardBody,CardText,Breadcrumb,BreadcrumbItem,Butto
 import { LocalForm, Control,Errors } from 'react-redux-form';
 import {Loading} from './LoadingComponent.js';
 import {baseUrl} from '../shared/baseUrl.js';
+import {FadeTransform,Fade,Stagger} from 'react-animation-components';
 
 const required = (value) => value && value.length;
 const minLength = (len) => (value) => value && (value.length >= len)  
@@ -94,16 +95,20 @@ const RenderComments = ({comments,postComment,dishId})=>{
     const commentArray=comments.map((comment)=>{
         if(comment != null){
             return(
+                <Fade in>
                 <div key={comment.id} className='mb-1 mt-1'>
-                    <li>
-                        <p>
-                            {comment.comment}
-                        </p>
-                        <p>
-                            -- {comment.author} , {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))}
-                        </p>
-                    </li>
+                    
+                        <li>
+                            <p>
+                                {comment.comment}
+                            </p>
+                            <p>
+                                -- {comment.author} , {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))}
+                            </p>
+                        </li>
+                    
                 </div>
+                </Fade>
             );
         }
         else{
@@ -115,7 +120,9 @@ const RenderComments = ({comments,postComment,dishId})=>{
     );
     return(
         <div className='list-unstyled'>
-            {commentArray}
+            <Stagger in>
+                {commentArray}
+            </Stagger>
             <CommentForm dishId={dishId} postComment={postComment}/>
         </div>
     );
@@ -124,13 +131,18 @@ function RenderDish({dish})
 {
     if(dish != null) {
         return(
-            <Card>
-                <CardImg width='100%' src={baseUrl+dish.image} alt={dish.name} />
-                <CardBody>
-                    <CardTitle>{dish.name}</CardTitle>
-                    <CardText>{ dish.description}</CardText>
-                </CardBody>
-            </Card>
+            <FadeTransform in 
+                transformProps={{
+                    exitTransform:'scale(0.5) translateY(-50%)'
+                }}>
+                <Card>
+                    <CardImg width='100%' src={baseUrl+dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{ dish.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
         );
     }
     else {
