@@ -96,18 +96,18 @@ const RenderComments = ({comments,postComment,dishId})=>{
         if(comment != null){
             return(
                 <Fade in>
-                <div key={comment.id} className='mb-1 mt-1'>
-                    
-                        <li>
-                            <p>
-                                {comment.comment}
-                            </p>
-                            <p>
-                                -- {comment.author} , {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))}
-                            </p>
-                        </li>
-                    
-                </div>
+                    <div key={comment.id} className='mb-1 mt-1'>
+                        
+                            <li>
+                                <p>
+                                    {comment.comment}
+                                </p>
+                                <p>
+                                    -- {comment.author} , {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))}
+                                </p>
+                            </li>
+                        
+                    </div>
                 </Fade>
             );
         }
